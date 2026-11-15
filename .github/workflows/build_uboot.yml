@@ -253,5 +253,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: uboot-output-${{ github.event.inputs.board_name }}
-          path: u-boot15/out_flat/*
+          path: out_flat/*
           
