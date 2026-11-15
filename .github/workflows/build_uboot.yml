@@ -222,7 +222,6 @@ jobs:
 
       - name: Sign UBoot with prebuilt SML
         run: |
-          ls -la ../tools/ 2>/dev/null || echo "../tools directory not found"
 
           # ===== FDL2 (fdl2.bin (note: uboot and fdl2 is same file, This step is merely supplementary )) =====
           FDL2_BIN=out/fdl2.bin
@@ -233,10 +232,10 @@ jobs:
           UBOOT_SIGNED=out/u-boot-dtb-sign.bin
 
           # ===== Prebuilt SML (Secure Monitor Loader) =====
-          PREBUILT_SML=/tools/prebuilt/sml-sign.bin
+          PREBUILT_SML=tools/prebuilt/sml-sign.bin
 
           # Compile
-          gcc /tools/bsp_sign_fxxker_for_uboot.c -o bsp_sign_fxxker_for_uboot
+          gcc tools/bsp_sign_fxxker_for_uboot.c -o bsp_sign_fxxker_for_uboot
 
           # run patcher
           ./bsp_sign_fxxker_for_uboot "$PREBUILT_SML" "$FDL2_BIN" "$FDL2_SIGNED"
