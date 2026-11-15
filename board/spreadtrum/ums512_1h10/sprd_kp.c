@@ -17,9 +17,6 @@ extern int erase_spl_enter_download_mode(void);
 #define GPIO_SW_ID3  82
 int sw_key = KEY_VOLUMEDOWN;
 
-int lcd_low_bat;
-extern int low_bat;
-
 #ifdef CONFIG_GET_HW_VERSION
 /*SW_ID1 SW_ID2 SW_ID3*/
 int hw_gpio_pin[3] = {38, 39, 82};
@@ -106,36 +103,14 @@ unsigned char board_key_scan(void)
 
 unsigned int check_key_boot(unsigned char key)
 {
-    /* Fixme, an example of the combination of keys for enter download */
-    if(sw_key == key) {
-#if 0
-#ifdef CONFIG_FASTBOOT_SECURITY_DOWNLOAD
-		debugf("befor fb_check_secboot_enable! low_bat=%d\n", low_bat);
-		if (fb_check_secboot_enable()) {
-			debugf("after fb_check_secboot_enable, and fb_check_secboot_enable is true!\n");
-#ifdef CONFIG_ERASE_SPL_AUTO_DOWNLOAD
-			if (0 != erase_spl_enter_download_mode()) {
-				debugf("erase partition splloader and splloader_bak fail!\n");
-				debugf("enter old autodloader_mode!\n");
-			} else
-#endif
-			{
-				errorf("not support!!!\n");
-			}
-		} else
-#endif
-#endif
-	
-	    if(1 == low_bat)
-	    {
-		lcd_low_bat = 1;
-		return 0;	
-	    }  
-	    return CMD_FASTBOOT_MODE;
-    } 
-    else {
-      debugf("check_key_boot not sw_key (%d)\n", sw_key);
+    if(sw_key == key)
+      return CMD_FACTORYTEST_MODE;
+    else if(KEY_HOME == key)
+      return CMD_FASTBOOT_MODE;
+    else if(KEY_VOLUMEDOWN== key)
+      return CMD_RECOVERY_MODE;
+    else
       return 0;
-    }
 }
+
 

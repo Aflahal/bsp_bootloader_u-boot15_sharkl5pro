@@ -496,28 +496,14 @@ static BYTE sgm41512_get_value(BYTE reg, BYTE reg_bit, BYTE reg_shift)
 
 	return ret;
 }
-#ifdef CONFIG_FASTBOOT_SECURITY_DOWNLOAD
-extern bool get_hmd_configs();
-extern int s_is6000F;
-extern uint32_t sprdfgu_read_vbat_vol(void);
-#endif
+
 void sprdchg_sgm41512_start_chg(int type)
 {
-#ifdef CONFIG_FASTBOOT_SECURITY_DOWNLOAD
-	unsigned int vbat_vol = sprdfgu_read_vbat_vol();
-	get_hmd_configs();
-	printf("%s: s_is6000F = %d, vbat_vol = %d!\n", __func__, s_is6000F, vbat_vol);
-	if( s_is6000F && vbat_vol > 3600){
-		printf("## not charge in uboot!");
-	}else
-
-#endif
-	{
-		printf("## charge in uboot!");
-		sprd_charge_pd_control(true);
-		SGM41512_set_en_hiz(0x0);
-		SGM41512_set_chg_config(1);
-	}
+	printf("## charge in uboot!");
+	sprd_charge_pd_control(true);
+	SGM41512_set_en_hiz(0x0);
+	SGM41512_set_chg_config(1);
+	
 }
  void sprdchg_sgm41512_stop_charging(int value)
 {

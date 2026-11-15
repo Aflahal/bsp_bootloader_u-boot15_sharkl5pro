@@ -117,7 +117,7 @@ int misc_init_r(void)
 static void battery_init(void)
 {
 	sprdchg_common_cfg();
-	sprdchg_fan54015_init();
+	sprdchg_bq2560x_init();
 	sprdbat_init();
 }
 
@@ -144,6 +144,30 @@ int board_late_init(void)
 	return 0;
 }
 
+void display_state_verified_red(void) {
+    debugf("WARNNING: Oem Key & User Key Verify Failed!!!\n");
+	lcd_printf("Current State: Red state; Rebooting...\n\n");
+}
+
+void display_state_verified_yellow(void) {
+    debugf("WARNNING: USER KEY VERIFY SUCCESS!!!\n");
+	lcd_printf("Current State: Yellow state\n\n");
+}
+
+
+void display_state_verified_orange(void) {
+    debugf("WARNNING: LOCK FLAG IS : UNLOCK, SKIP VERIFY!!!\n");
+	lcd_printf("Current State: Orange state\n\n");
+}
+
+void display_state_verified_green(int s_boot_mode) {
+    debugf("INFO: LOCK FLAG IS : LOCK!!!\n");
+    debugf("WARNING: OEM KEY VERIFY SUCCESS!!! bootmode=%d\n", s_boot_mode);
+}
+
+void display_state_verified_unknown(void) {
+    debugf("WARNNING: VERIFY RESULT UNKNOWN!!!\n");
+}
 
 CBOOT_FUNC s_boot_func_array[CHECK_BOOTMODE_FUN_NUM] = {
 	get_mode_from_bat_low,

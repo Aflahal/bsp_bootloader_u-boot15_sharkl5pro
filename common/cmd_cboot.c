@@ -352,11 +352,7 @@ int do_selcet_ab(void)
 }
 #endif
 
-extern bool get_diag_flag();
-extern int s_is6000F;
-
 #ifdef CONFIG_SECBOOT
-extern bool get_hmd_configs();
 extern int get_lcs(uint32_t *p_lcs);
 int s_efused = 0;
 #endif
@@ -432,23 +428,6 @@ int do_cboot(cmd_tbl_t *cmdtp, int flag, int argc, char *const argv[])
 	}
 
 	board_boot_mode_regist(boot_mode_array);
-	/*add by zesheng for hmd enterprise api start*/
-	char buffast[1];
-	memset(buffast, 0, sizeof(buffast));
-	if (0 != common_raw_read("miscdata", (uint64_t)sizeof(char),(uint64_t)HMD_EN_API_FASTBOOT_MODE_OFFSET, buffast)) {
-		debugf("zesheng common_raw_read miscdata fial !\n");
-	}else{
-		if(!strncmp(buffast, "1",1) && (bootmode == CMD_RECOVERY_MODE || bootmode == CMD_FASTBOOT_MODE)){
-			debugf("zesheng hmd can not fastboot! status=%s\n",buffast);
-			bootmode = CMD_NORMAL_MODE;
-		}else{
-			debugf("zesheng hmd can fastboot! status=%s\n",buffast);
-		}
-	}
-	/*add by zesheng for hmd enterprise api end*/
-	//added by dongming for control the calibrate mode
-	get_hmd_configs();
-	printf("WARNNING: s_is6000F=%d\n", s_is6000F);
 
 #if defined (CONFIG_SECBOOT)	
 	s_efused = 0;
@@ -462,15 +441,6 @@ int do_cboot(cmd_tbl_t *cmdtp, int flag, int argc, char *const argv[])
 		}
 	}
 #endif
-
-	if ( s_efused == 1 && CMD_CALIBRATION_MODE == bootmode && !s_is6000F ) {
-		if ( !get_diag_flag() ) {
-			bootmode = CMD_FASTBOOT_MODE;
-			printf("%s: WARNNING: diag flag disabled !!! change to CMD_FASTBOOT_MODE!!!\n", __func__);
-		}
-	}
-	// end added
-
 	s_boot_mode = bootmode;
 	printf("enter boot mode %d\n", bootmode);
 
