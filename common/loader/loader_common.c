@@ -18,6 +18,7 @@
 #include "sprd_cpcmdline.h"
 #include <asm/arch/sprd_reg.h>
 #include <hwfeature.h>
+#include <lcd_console.h>
 
 #define DECOUPLING_INFO_PARTITION "modem"
 #ifdef CONFIG_SUPPORT_NR
@@ -568,10 +569,17 @@ void vlx_entry(uchar *dt_addr)
 	}
 #endif
 
+	move_lcd_cursor_to_align_parent_start_bottom();
+
 	char *bootmode = getenv("bootmode");
 	uint32_t consume_time;
-
 	consume_time = SCI_GetTickCount() - uboot_start_time;
+
+	lcd_printf("   > enter %s mode, u-boot consume time: %u.%02us",
+		!bootmode ? "normal" : bootmode,
+		(unsigned int)(consume_time / 1000),
+		(unsigned int)((consume_time % 1000) / 10));
+
 	printf("enter mode %s, consume time: %dms, boot_reason: %s,pwroff_reason: %s\n",
 		!bootmode ? "normal" : bootmode, consume_time,
 		!bootcause_cmdline ? "Bootcause hasn't been set yet" : bootcause_cmdline,
