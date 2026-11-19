@@ -245,6 +245,18 @@ void lcd_printf(const char *fmt, ...)
 	lcd_puts(buf);
 }
 
+void move_lcd_cursor_to_align_parent_start(void) {
+	int total_rows = lcd_get_screen_rows();
+	int center_y = total_rows / 2;
+	lcd_position_cursor(0, center_y);
+}
+
+void move_lcd_cursor_to_align_parent_start_bottom(void) {
+	int total_rows = lcd_get_screen_rows();
+	int bottom_y = total_rows - 2; 
+	lcd_position_cursor(0, bottom_y);
+}
+
 static int do_lcd_setcursor(cmd_tbl_t *cmdtp, int flag, int argc,
 			    char *const argv[])
 {
@@ -282,4 +294,3 @@ U_BOOT_CMD(
 	"print string on lcd-framebuffer",
 	"    <string>"
 );
-
