@@ -45,9 +45,7 @@ unsigned char board_key_scan(void)
 		voldown_pressed = 1;
 
 	/* Power Button */
-	sprd_eic_request(EIC_POWER_PBINT);
-	udelay(3000);
-	power_pressed = (sprd_eic_get(EIC_POWER_PBINT) == 0);
+	power_pressed = power_button_pressed();
 	debugf("power_pressed = %d\n", power_pressed);
 
 	if (power_pressed && volup_pressed && voldown_pressed) {
