@@ -2473,14 +2473,14 @@ void vlx_nand_boot_zebu(char *kernel_pname, int backlight_set, int lcd_enable)
 
 #ifdef CONFIG_SECBOOT
 int loader_binding_data_set(void)
-{		
+{
 	/*set device state*/
 	get_lock_status();
 
 	if(g_DeviceStatus == VBOOT_STATUS_LOCK){
-		display_state_verified_green(s_boot_mode);
+		debugf("INFO: LOCK FLAG IS : LOCK!!!\n");
 	}else if(g_DeviceStatus == VBOOT_STATUS_UNLOCK){
-		display_state_verified_orange();
+		debugf("INFO: LOCK FLAG IS : UNLOCK!!!\n");
 	}
 
 	return 0;
