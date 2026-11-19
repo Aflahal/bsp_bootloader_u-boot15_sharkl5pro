@@ -44,21 +44,6 @@ unsigned char board_key_scan(void)
 	else if (gpio_volumedown == 0)
 		voldown_pressed = 1;
 
-	/* Power Button */
-	power_pressed = power_button_pressed();
-	debugf("power_pressed = %d\n", power_pressed);
-
-	if (power_pressed && volup_pressed && voldown_pressed) {
-		key_code = KEY_HOME;
-		debugf("[keys] power + volumeup + volumedown pressed!\n");
-	} else if (voldown_pressed) {
-		key_code = KEY_VOLUMEDOWN;
-		debugf("[gpio keys] volumedown pressed!\n");
-	} else if (volup_pressed) {
-		key_code = KEY_VOLUMEUP;
-		debugf("[eic keys] volumeup pressed!\n");
-	}
-
 	if (KEY_RESERVED == key_code)
 		debugf("[gpio keys] no key pressed!\n");
 
@@ -69,8 +54,6 @@ unsigned int check_key_boot(unsigned char key)
 {
 	if (KEY_VOLUMEUP == key)
 		return CMD_RECOVERY_MODE;
-	else if (KEY_HOME == key)
-		return CMD_FASTBOOT_MODE;
 	else if (KEY_VOLUMEDOWN == key)
 		return CMD_FASTBOOT_MODE;
 	else
