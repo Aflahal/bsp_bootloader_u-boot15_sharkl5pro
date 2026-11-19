@@ -118,7 +118,7 @@ static void battery_init(void)
 {
 	sprdchg_common_cfg();
 	sprdchg_bq2560x_init();
-	sprdbat_init();
+	sprdfgu_init();
 }
 
 int board_late_init(void)
