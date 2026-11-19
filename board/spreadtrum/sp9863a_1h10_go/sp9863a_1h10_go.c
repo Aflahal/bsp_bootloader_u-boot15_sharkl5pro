@@ -145,19 +145,19 @@ int board_late_init(void)
 }
 
 void display_state_verified_red(void) {
-    debugf("WARNNING: Oem Key & User Key Verify Failed!!!\n");
-	lcd_printf("Current State: Red state; Rebooting...\n\n");
+    debugf("WARNING: Oem Key & User Key Verify Failed!!!\n");
+	lcd_printf("WARNING: LOCK FLAG IS : LOCK, but image verification is failed, rebooting...\n\n");
 }
 
 void display_state_verified_yellow(void) {
-    debugf("WARNNING: USER KEY VERIFY SUCCESS!!!\n");
-	lcd_printf("Current State: Yellow state\n\n");
+    debugf("WARNING: USER KEY VERIFY SUCCESS!!!\n");
+	lcd_printf("WARNING: LOCK FLAG IS : LOCK, but User Key is: Verified\n");
 }
 
 
 void display_state_verified_orange(void) {
-    debugf("WARNNING: LOCK FLAG IS : UNLOCK, SKIP VERIFY!!!\n");
-	lcd_printf("Current State: Orange state\n\n");
+    debugf("WARNING: LOCK FLAG IS : UNLOCK!!!\n");
+	lcd_printf("WARNING: LOCK FLAG IS : UNLOCK!!!\n");
 }
 
 void display_state_verified_green(int s_boot_mode) {
@@ -166,7 +166,7 @@ void display_state_verified_green(int s_boot_mode) {
 }
 
 void display_state_verified_unknown(void) {
-    debugf("WARNNING: VERIFY RESULT UNKNOWN!!!\n");
+    debugf("WARNING: Verification result is UNKNOWN!!!\n");
 }
 
 CBOOT_FUNC s_boot_func_array[CHECK_BOOTMODE_FUN_NUM] = {
