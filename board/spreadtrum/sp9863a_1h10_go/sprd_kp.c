@@ -22,26 +22,43 @@ unsigned char board_key_scan(void)
 	uint32_t key_code = KEY_RESERVED;
 	int gpio_volumeup = -1;
 	int gpio_volumedown = -1;
+	int volup_pressed = 0;
+	int voldown_pressed = 0;
+	int power_pressed = 0;
 
-
+	/* Volume Up */
 	sprd_eic_request(EIC_KEY2_7S_RST_EXT_RSTN_ACTIVE);
 	udelay(3000);
 	gpio_volumeup = sprd_eic_get(EIC_KEY2_7S_RST_EXT_RSTN_ACTIVE);
-	debugf("gpio_volumeup = %d\n",gpio_volumeup);
-	if(gpio_volumeup < 0)
+	debugf("gpio_volumeup = %d\n", gpio_volumeup);
+	if (gpio_volumeup < 0)
 		errorf("[eic keys] volumeup : sprd_eic_get return ERROR!\n");
-	if(gpio_volumeup > 0) {
+	else if (gpio_volumeup > 0)
+		volup_pressed = 1;
+
+	/* Volume Down */
+	gpio_volumedown = sprd_gpio_get(NULL, SPRD_VOLUMEDOWN_GPIO);
+	debugf("gpio_volumedown = %d\n", gpio_volumedown);
+	if (gpio_volumedown < 0)
+		errorf("[eic keys] volumedown : sprd_gpio_get return ERROR!\n");
+	else if (gpio_volumedown == 0)
+		voldown_pressed = 1;
+
+	/* Power Button */
+	sprd_eic_request(EIC_POWER_PBINT);
+	udelay(3000);
+	power_pressed = (sprd_eic_get(EIC_POWER_PBINT) == 0);
+	debugf("power_pressed = %d\n", power_pressed);
+
+	if (power_pressed && volup_pressed && voldown_pressed) {
+		key_code = KEY_HOME;
+		debugf("[keys] power + volumeup + volumedown pressed!\n");
+	} else if (voldown_pressed) {
+		key_code = KEY_VOLUMEDOWN;
+		debugf("[gpio keys] volumedown pressed!\n");
+	} else if (volup_pressed) {
 		key_code = KEY_VOLUMEUP;
 		debugf("[eic keys] volumeup pressed!\n");
-	 }
-
-	gpio_volumedown = sprd_gpio_get(NULL, SPRD_VOLUMEDOWN_GPIO);
-		debugf("gpio_volumedown = %d\n",gpio_volumedown);
-	if(gpio_volumedown < 0)
-		errorf("[eic keys] volumedown : sprd_eic_get return ERROR!\n");
-	if(gpio_volumedown == 0) {
-		key_code = KEY_VOLUMEDOWN;
-		debugf("[eic keys] volumedown pressed!\n");
 	}
 
 	if (KEY_RESERVED == key_code)
@@ -52,13 +69,12 @@ unsigned char board_key_scan(void)
 
 unsigned int check_key_boot(unsigned char key)
 {
-	/*if (KEY_VOLUMEUP == key)
-		return CMD_FACTORYTEST_MODE;*/
-	if(KEY_HOME == key)
-		return CMD_FASTBOOT_MODE;
-	else if(KEY_VOLUMEDOWN== key)
+	if (KEY_VOLUMEUP == key)
 		return CMD_RECOVERY_MODE;
+	else if (KEY_HOME == key)
+		return CMD_FASTBOOT_MODE;
+	else if (KEY_VOLUMEDOWN == key)
+		return CMD_FASTBOOT_MODE;
 	else
 		return 0;
 }
-
