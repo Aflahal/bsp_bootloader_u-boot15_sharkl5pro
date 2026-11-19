@@ -381,7 +381,7 @@
 
 /* Vibrator */
 #define CONFIG_VIBRATOR
-#define CONFIG_DM_SC27XX_VIBRA
+
 
 #define CONFIG_SYS_I2C
 #define CONFIG_SPRD_I2C_V3
