@@ -204,9 +204,11 @@ jobs:
           export CONFIG_PCTOOL_CHECK_MULTI_FIXNV=false
           export CONFIG_PCTOOL_CHECK_WRITE_PROTECT=false
 
+          # pm_sys
+          export BSP_PROJECT_SEC_CM4_FLAG=true
+                    
           # Others
           #export BSP_PKCS1_PSS_FLAG=true
-          #export BSP_PROJECT_SEC_CM4_FLAG=true
           #export CONFIG_CHIP_UID=false
           #export BSP_CONFIG_TEE_FIREWALL=false
           #export BSP_BOARD_ATF_CONFIG=false
