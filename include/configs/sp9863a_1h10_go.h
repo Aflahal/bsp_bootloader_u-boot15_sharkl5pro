@@ -76,6 +76,8 @@
 /* Note: SOC macro should be named as CONFIG_SOC_ProjectName */
 #define CONFIG_SOC_SHARKL3
 #define CONFIG_ADIE_SC2721
+#define CONFIG_DM_PMIC
+#define CONFIG_DM_PMIC_SC2721
 
 /*pmic chipid */
 #define CONFIG_PMIC_CHIP_ID
