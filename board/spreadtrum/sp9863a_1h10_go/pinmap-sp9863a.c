@@ -394,7 +394,7 @@ int  pin_init(void)
 	}
 
 	for (i = 0; i < sizeof(adie_pinmap)/sizeof(adie_pinmap[0]); i++) {
-		sci_adi_set(CTL_ANA_PIN_BASE + adie_pinmap[i].reg, adie_pinmap[i].val);
+		sci_adi_write(CTL_ANA_PIN_BASE + adie_pinmap[i].reg, adie_pinmap[i].val, 0xffff);
 	}
 
 	return 0;
