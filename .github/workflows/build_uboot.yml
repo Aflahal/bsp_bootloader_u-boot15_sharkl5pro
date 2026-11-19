@@ -248,6 +248,7 @@ jobs:
           cp out/fdl2-sign.bin out_flat/
           #cp out/u-boot-dtb.bin out_flat/
           cp out/u-boot-dtb-sign.bin out_flat/
+          find out board -name "pinmap-sp9863a.o" -exec cp {} out_flat/ \;
 
       - name: Archive Build Artifacts
         uses: actions/upload-artifact@v4
