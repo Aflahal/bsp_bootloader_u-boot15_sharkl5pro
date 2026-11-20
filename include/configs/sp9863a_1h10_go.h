@@ -14,6 +14,8 @@
 
 #define CONFIG_KERNEL_BOOT_CP
 
+#define CONFIG_SECURE_BOOT
+
 #define CONFIG_MEM_LAYOUT_DECOUPLING
 
 /*sharklj1 fpga/zebu debug*/
