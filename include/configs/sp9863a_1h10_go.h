@@ -250,7 +250,7 @@
 #define FIXNV_SIZE     0x100000
 
 #define CONFIG_DFS_ENABLE
-#define DFS_ADDR    0x50000000
+#define DFS_ADDR    0x800000
 #define DFS_SIZE    0x10000
 
 
