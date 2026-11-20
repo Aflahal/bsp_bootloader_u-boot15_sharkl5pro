@@ -34,11 +34,8 @@ void modem_entry()
 	pubcp_boot();
 	debugf("boot CP1 OK\n");
 #else
-	extern unsigned int g_charger_mode;
-	if(g_charger_mode) {
-		sp_boot();
-		debugf("boot sp  OK\n");
-	}
+	sp_boot();
+	debugf("boot sp OK\n");
 #endif
 }
 
