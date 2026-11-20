@@ -12,7 +12,7 @@
 
 #define SPRD_DEBUG_LEVEL		2
 
-#define CONFIG_KERNEL_BOOT_CP
+//#define CONFIG_KERNEL_BOOT_CP
 
 #define CONFIG_MEM_LAYOUT_DECOUPLING
 
@@ -250,8 +250,8 @@
 #define FIXNV_SIZE     0x100000
 
 #define CONFIG_DFS_ENABLE
-#define DFS_ADDR    0x800000
-#define DFS_SIZE    (256*1024)
+#define DFS_ADDR    0x50000000
+#define DFS_SIZE    0x10000
 
 
 /*eMMC config*/
@@ -374,6 +374,7 @@
 #define CONFIG_7S_RST_SHORT_MODE	1	//0:long press then release key to trigger;1:press key some time to trigger
 #define CONFIG_7S_RST_2KEY_MODE		1	//0:1Key--Normal mode; 1:2KEY
 #define CONFIG_7S_RST_THRESHOLD		7	//7S, hold key down for this time to trigger
+
 
  /*SMPL config*/
 //#define CONFIG_SMPL_EN
