@@ -761,22 +761,26 @@ int _boot_load_required_image(boot_image_required_t img_info)
 #elif defined (CONFIG_SECBOOT)
 		if (0 == memcmp("pm_sys", img_info.partition, strlen("pm_sys")))
 		{
-		#ifndef PROJECT_SEC_CM4
+		#ifdef PROJECT_SEC_CM4
 			/***secboot 2nd step***/
-			vboot_secure_process_flow(img_info.partition);
+			vboot_secure_process_flow_cm4(img_info.partition);
+			memcpy(img_info.mem_addr, (gd->verify_base + SYS_HEADER_SIZE), img_info.size);
+		#else
+			if (common_raw_read(temp, img_info.size, SYS_HEADER_SIZE, img_info.mem_addr)) {
+				errorf("read %s partition fail\n", temp);
+			}
 		#endif
 		}
 		else
 		{
 			/***secboot 2nd step***/
 			vboot_secure_process_flow(img_info.partition);
+		#if defined (CONFIG_VBOOT_V2)
+			memcpy(img_info.mem_addr, gd->verify_base, img_info.size);
+		#else
+			memcpy(img_info.mem_addr, (gd->verify_base + SYS_HEADER_SIZE), img_info.size);
+		#endif
 		}
-
-	#if defined (CONFIG_VBOOT_V2)
-		memcpy(img_info.mem_addr,gd->verify_base,img_info.size);
-	#else
-		memcpy(img_info.mem_addr,(gd->verify_base + SYS_HEADER_SIZE),img_info.size);
-	#endif
 #else  // Secure boot is not turned on
 		i_info.partition = temp;
 		i_info.mem_addr = img_info.mem_addr;
@@ -2816,20 +2820,20 @@ void vlx_nand_boot(char *kernel_pname, int backlight_set, int lcd_enable)
 	if (-1 == ret)
 		return;
 
+/*
 #ifdef PROJECT_SEC_CM4
 	if(g_charger_mode)
 	{
         boot_image_required_t pm_image = {"pm_sys", NULL, DFS_SIZE, DFS_ADDR};
 
-		/* load sp ddr boot */
 #ifdef CONFIG_SP_DDR_BOOT
 		load_sp_boot_code();
 #endif
 
-		/***secboot 2nd step***/
 		vboot_secure_process_flow_cm4(pm_image.partition);
         }
 #endif
+*/
 
 	//last. uboot postload doing...
 	_uboot_set_postload();
