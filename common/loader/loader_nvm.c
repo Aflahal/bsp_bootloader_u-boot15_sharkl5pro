@@ -40,6 +40,7 @@ extern void pmic_arm7_RAM_active(void);
 #include "secure_boot.h"
 #include "secure_verify.h"
 #include <linux/types.h>
+#include <asm/arch/sprd_reg.h>
 #endif
 
 #ifdef CONFIG_OF_LIBFDT
@@ -761,6 +762,8 @@ int _boot_load_required_image(boot_image_required_t img_info)
 		{
 			if (common_raw_read(temp, img_info.size, SYS_HEADER_SIZE, img_info.mem_addr)) {
 				errorf("read %s partition fail\n", temp);
+			} else {
+				*((volatile u32*)REG_PMU_APB_CP_SOFT_RST) &= ~BIT_PMU_APB_SP_CORE_SOFT_RST;
 			}
 		}
 		else
