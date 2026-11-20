@@ -1,4 +1,4 @@
-#include <common.h>
+ #include <common.h>
 #include <asm/io.h>
 #include <android_bootimg.h>
 #include "loader_common.h"
@@ -265,9 +265,7 @@ static boot_image_required_t const s_boot_image_COMMON_table[] = {
 	{"simlock", NULL, SIMLOCK_SIZE, SIMLOCK_ADR},
 #endif
 #ifdef CONFIG_DFS_ENABLE
-#if !defined( CONFIG_KERNEL_BOOT_CP )
 	{"pm_sys", NULL, DFS_SIZE, DFS_ADDR},
-#endif
 #endif
 #ifdef CONFIG_CH_ENABLE
 #if !defined( CONFIG_KERNEL_BOOT_CP )
@@ -2641,12 +2639,14 @@ int load_require_image(void)
 		row++;
 	}
 
+/*
 #if defined(CONFIG_KERNEL_BOOT_CP)
 	if(g_charger_mode) {
 		boot_image_required_t pm_image = {"pm_sys", NULL, DFS_SIZE, DFS_ADDR};
 		_boot_load_required_image(pm_image);
 	}
 #endif
+*/
 
 #if !defined(CONFIG_KERNEL_BOOT_CP) && defined(CONFIG_MEM_LAYOUT_DECOUPLING)
 	extern boot_image_required_t *get_cp_load_table(void);
