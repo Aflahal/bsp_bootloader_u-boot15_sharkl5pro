@@ -251,7 +251,7 @@
 
 #define CONFIG_DFS_ENABLE
 #define DFS_ADDR    0x800000
-#define DFS_SIZE    0x10000
+#define DFS_SIZE    0x40000
 
 
 /*eMMC config*/
