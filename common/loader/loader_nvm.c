@@ -761,15 +761,9 @@ int _boot_load_required_image(boot_image_required_t img_info)
 #elif defined (CONFIG_SECBOOT)
 		if (0 == memcmp("pm_sys", img_info.partition, strlen("pm_sys")))
 		{
-		#ifdef PROJECT_SEC_CM4
-			/***secboot 2nd step***/
-			vboot_secure_process_flow_cm4(img_info.partition);
-			memcpy(img_info.mem_addr, (gd->verify_base + SYS_HEADER_SIZE), img_info.size);
-		#else
 			if (common_raw_read(temp, img_info.size, SYS_HEADER_SIZE, img_info.mem_addr)) {
 				errorf("read %s partition fail\n", temp);
 			}
-		#endif
 		}
 		else
 		{
