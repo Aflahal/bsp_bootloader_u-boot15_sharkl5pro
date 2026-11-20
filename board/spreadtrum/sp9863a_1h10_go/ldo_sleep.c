@@ -70,7 +70,7 @@ void pmic_lowpower_config(uint32_t gen_para)
 
 
 	ANA_REG_SET(ANA_REG_GLB_SLP_DCDC_PD_CTRL,
-		BIT_SLP_DCDCCORE_DROP_EN |
+		//BIT_SLP_DCDCCORE_DROP_EN |
 		//BIT_SLP_DCDCWPA_PD_EN |
 		BIT_SLP_DCDCCPU_PD_EN |
 		//BIT_SLP_DCDCMEM_PD_EN |
@@ -124,7 +124,7 @@ void pmic_lowpower_config(uint32_t gen_para)
 	ANA_REG_SET(ANA_REG_GLB_SLP_LDO_PD_CTRL1,
 		//BIT_SLP_LDOCON_PD_EN |
 		//BIT_SLP_LDOSIM0_PD_EN |
-		BIT_SLP_LDOAVDD18_PD_EN |
+		//BIT_SLP_LDOAVDD18_PD_EN |
 		//BIT_SLP_LDOMEM_PD_EN |
 		0
 	);
