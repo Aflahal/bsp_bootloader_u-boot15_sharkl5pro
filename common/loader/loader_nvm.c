@@ -1,5 +1,6 @@
- #include <common.h>
+#include <common.h>
 #include <asm/io.h>
+#include <asm/arch/sprd_reg.h>
 #include <android_bootimg.h>
 #include "loader_common.h"
 #include <malloc.h>
@@ -40,7 +41,6 @@ extern void pmic_arm7_RAM_active(void);
 #include "secure_boot.h"
 #include "secure_verify.h"
 #include <linux/types.h>
-#include <asm/arch/sprd_reg.h>
 #endif
 
 #ifdef CONFIG_OF_LIBFDT
