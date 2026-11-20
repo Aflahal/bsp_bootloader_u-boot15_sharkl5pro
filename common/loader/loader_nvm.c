@@ -760,7 +760,7 @@ int _boot_load_required_image(boot_image_required_t img_info)
 #elif defined (CONFIG_SECBOOT)
 		if (0 == memcmp("pm_sys", img_info.partition, strlen("pm_sys")))
 		{
-			if (common_raw_read(temp, img_info.size, SYS_HEADER_SIZE, img_info.mem_addr)) {
+			if (common_raw_read(temp, img_info.size, 0, img_info.mem_addr)) {
 				errorf("read %s partition fail\n", temp);
 			} else {
 				*((volatile u32*)REG_PMU_APB_CP_SOFT_RST) &= ~BIT_PMU_APB_SP_CORE_SOFT_RST;
