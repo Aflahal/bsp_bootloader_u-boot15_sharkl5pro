@@ -205,7 +205,7 @@ jobs:
           export CONFIG_PCTOOL_CHECK_WRITE_PROTECT=false
 
           # pm_sys
-          export BSP_PROJECT_SEC_CM4_FLAG=true
+          #export BSP_PROJECT_SEC_CM4_FLAG=true
                     
           # Others
           #export BSP_PKCS1_PSS_FLAG=true
